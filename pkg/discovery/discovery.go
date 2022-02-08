@@ -26,7 +26,7 @@ import (
 	"sync"
 	"time"
 
-	"k8s.io/klog"
+	"k8s.io/klog/v2"
 	"sigs.k8s.io/sig-storage-local-static-provisioner/pkg/common"
 	"sigs.k8s.io/sig-storage-local-static-provisioner/pkg/metrics"
 
@@ -34,7 +34,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	storagev1listers "k8s.io/client-go/listers/storage/v1"
 	"k8s.io/client-go/tools/cache"
-	esUtil "sigs.k8s.io/sig-storage-lib-external-provisioner/util"
+	esUtil "sigs.k8s.io/sig-storage-lib-external-provisioner/v6/util"
 	"sigs.k8s.io/sig-storage-local-static-provisioner/pkg/deleter"
 )
 
@@ -284,7 +284,7 @@ func (d *Discoverer) discoverVolumesAtPath(class string, config common.MountConf
 				return err
 			}
 			if !matched {
-				klog.Infof("file(%s) under(%s) does not match pattern(%s)", file, config.MountDir, config.NamePattern)
+				klog.V(5).Infof("file(%s) under(%s) does not match pattern(%s)", file, config.MountDir, config.NamePattern)
 				continue
 			}
 		}

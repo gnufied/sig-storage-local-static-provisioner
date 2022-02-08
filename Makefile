@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-REGISTRY ?= quay.io/external_storage
+REGISTRY ?= k8s.gcr.io/sig-storage
 VERSION ?= latest
-GOVERSION ?= 1.13.9
+GOVERSION ?= 1.16.1
 ARCH ?= amd64
 
 ALL_ARCH = amd64 arm arm64 ppc64le s390x
@@ -80,12 +80,6 @@ test: provisioner
 	go test ./cmd/... ./pkg/...
 	docker run --privileged -v $(PWD)/deployment/docker/test.sh:/test.sh --entrypoint bash $(IMAGE) /test.sh
 .PHONY: test
-
-no-container-test:
-	go test ./cmd/... ./pkg/...
-	# Remove bash tests until we figure out how to run them via ci-operator
-	# bash $(PWD)/deployment/docker/test.sh $(PWD)/deployment/docker/scripts
-.PHONY: no-container-test
 
 clean:
 	rm -rf _output
